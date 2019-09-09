@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add Certification</title>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script type="text/javascript">
+		$( document ).ready(
+			function(){
+				$.ajax({
+	        		url:"checkPE.php", //the page containing php script
+	        		type: "POST", //request type
+	        		success:function(result){
+	        			if(result == 'Error'){
+	        				window.location.replace("clockIn.html")
+	        			}
+	     	 		 }
+	     		});
+			});
+	</script>
+</head>
+<body>
+	<div id = 'add'> 
+			<form action = 'addCert.php' method = "post">
+				<h1>Add a Certification to system</h1>
+
+				 <label for="cert_name">Certification Name</label>
+  				<input type="text" name="cert_name" id="cert_name" required>
+
+        		<br>
+        		<label for="cert_date">Date Recieved</label>
+  				<input type="date" name="cert_date" id="cert_date" required>
+  				<br>
+
+				<input type = "submit" value = "Submit">
+
+			</form>
+	</div>
+</body>
+</html>

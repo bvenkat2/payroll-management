@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add Consulting Firm</title>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script type="text/javascript">
+		$( document ).ready(
+			function(){
+				$.ajax({
+	        		url:"checkManager.php", //the page containing php script
+	        		type: "POST", //request type
+	        		success:function(result){
+	        			if(result == 'Error'){
+	        				window.location.replace("clockIn.html")
+	        			}
+	     	 		 }
+	     		});
+
+	     		$.ajax({
+	        		url:"dropDownFirm.php", //the page containing php script
+	        		type: "POST", //request type
+	        		success:function(result){
+	        			$('#dropdown').html(result);
+	     	 		 }
+				});
+			});
+	</script>
+</head>
+<body>
+	<div id = 'add'> 
+			<form action = 'addFirm.php' method = "post">
+				<h1>Add consulting firm to system</h1>
+
+				<div id ="dropdown"></div>
+        		<label for="firm_name">Firm Name</label>
+  				<input type="text" name="firm_name" id="firm_name" required>
+
+        		<br>
+        		<label for="username">Username:</label>
+  				<input type="text" name="username" id="username"required>
+
+        		<br>
+
+        		<label for="user-pw">Password:</label>
+				<input id = "user-pw" type = "text" name = "user-pw"required>
+
+				<br>
+				 <label for="accountnum">Account Number:</label>
+				<input id = "accountnum" type = "text" name = "accountnum"required>
+
+				<br>
+				<label for="routingnum">Routing Number:</label>
+				<input id = "routingnum" type = "text" name = "routingnum"required>
+
+				<br>
+				<label for="fee">Fee</label>
+				<input id = "fee" type = "text" name = "fee"required>
+				<br>
+				<label for="date">Pay Date</label>
+				<input id = "date" type = "date" name = "date"required>
+				<br>
+				<input type = "submit" value = "Submit">
+
+			</form>
+	</div>
+</body>
+</html>

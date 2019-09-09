@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <title>Edit User</title>
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script type="text/javascript">
+                $( document ).ready(
+                        function(){
+                                $.ajax({
+                                url:"checkIT.php", //the page containing php script
+                                type: "POST", //request type
+                                success:function(result){
+                                        if(result == 'Error'){
+                                                window.location.replace("clockIn.html")
+                                        }
+                                 }
+                        		});
+				                $.ajax({
+					        		url:"dropDownEdit.php", //the page containing php script
+					        		type: "POST", //request type
+					        		success:function(result){
+					        			$('#dropdown').html(result);
+					     	 		 }
+					     		});
+                                $.ajax({
+                                    url:"dropDownEditDept.php", //the page containing php script
+                                    type: "POST", //request type
+                                    success:function(result){
+                                        $('#dropdownDept').html(result);
+                                     }
+                                });                        });
+        </script>
+</head>
+<body>
+        <div id = 'edit'>
+                        <form action = 'editUser.php' method = "post">
+                                <h1>Edit a user</h1>
+                                <div id = "dropdown"></div>
+
+                                 <label for="firstname">First Name:</label>
+                                <input type="text" name="firstname" id="firstname" required>
+
+                        <br>
+                        <label for="lastname">Last Name:</label>
+                                <input type="text" name="lastname" id="lastname"required>
+
+                        <br>
+                        <label for="username">Username:</label>
+                                <input type="text" name="username" id="username"required>
+
+                        <br>
+
+                        <label for="user-pw">Password:</label>
+                                <input id = "user-pw" type = "text" name = "user-pw"required>
+
+                                <br>
+			<label for="salary">Salary:</label>
+                                <input id = "salary" type = "number" name = "salary"required>
+
+                                <div id = "dropdownDept"></div>
+
+                                <input type = "submit" value = "Submit">
+
+                        </form>
+        </div>
+</body>
+</html>

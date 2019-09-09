@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add Department</title>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script type="text/javascript">
+		$( document ).ready(
+			function(){
+				$.ajax({
+	        		url:"checkCEO.php", //the page containing php script
+	        		type: "POST", //request type
+	        		success:function(result){
+	        			if(result == 'Error'){
+	        				window.location.replace("clockIn.html")
+	        			}
+	     	 		 }
+	     		});
+	     		$.ajax({
+	        		url:"dropDownDepartment.php", //the page containing php script
+	        		type: "POST", //request type
+	        		success:function(result){
+	        			$('#dropdown').html(result);
+	     	 		 }
+	     		});
+			});
+	</script>
+</head>
+<body>
+	<div id = 'add'> 
+			<form action = 'addDepartment.php' method = "post">
+				<h1>Add Department to system</h1>
+
+				 <label for="dept_name">Department Name</label>
+  				<input type="text" name="dept_name" id="dept_name" required>
+
+        		<br>
+        		<div id = 'dropdown'></div>
+        		<label for="budget">Budget</label>
+  				<input type="text" name="budget" id="budget" required="">
+
+        		<br>
+
+				<input type = "submit" value = "Submit">
+
+			</form>
+	</div>
+</body>
+</html>

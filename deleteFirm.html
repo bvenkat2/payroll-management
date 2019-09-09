@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Delete Consulting Firm</title>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script type="text/javascript">
+		$( document ).ready(
+			function(){
+				$.ajax({
+	        		url:"checkHR.php", //the page containing php script
+	        		type: "POST", //request type
+	        		success:function(result){
+	        			if(result == 'Error'){
+	        				window.location.replace("clockIn.html")
+	        			}
+	     	 		 }
+	     		});
+
+	     		$.ajax({
+	        		url:"dropDownFirmDelete.php", //the page containing php script
+	        		type: "POST", //request type
+	        		success:function(result){
+	        			$('#dropdown').html(result);
+	     	 		 }
+				});
+			});
+	</script>
+</head>
+<body>
+	<div id = 'add'> 
+			<form action = 'deleteFirm.php' method = "post">
+				<h1>Delete consulting firm from system</h1>
+
+				<div id ="dropdown"></div>
+				<input type = "submit" value = "Submit">
+
+			</form>
+	</div>
+</body>
+</html>

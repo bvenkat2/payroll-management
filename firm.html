@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Consulting Firm Home</title>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script type="text/javascript">
+		$( document ).ready(
+            function(){
+            $.ajax({
+                    url:"checkFirm.php", //the page containing php script
+                    type: "POST", //request type
+                    success:function(result){
+                        if(result == 'Error'){
+                            window.location.replace("index.html")
+                        }
+                     }
+            });     
+            $.ajax({
+                url:"displayFirmData.php", //the page containing php script
+                type: "POST", //request type
+                success:function(result){
+                	console.log(result);
+                  if(result != 'Error')
+                    $("#firmData").html(result);
+                 }
+            });     
+        });
+        
+        function logOut(){
+			$.ajax({
+        		url:"logOut.php", //the page containing php script
+        		type: "POST", //request type
+        		success:function(result){
+        			console.log("Log Out");
+        			window.location.replace("index.html")
+
+     	 		 }
+
+     		});
+		}
+	</script>
+
+</head>
+<body>
+	<div id = 'logoutdiv'><button id = 'logout' onclick="logOut()"> Log Out</button></div>
+
+	<div id = "firmData"></div>
+</body>
+</html>

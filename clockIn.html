@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script type="text/javascript">
+		function updateHours(){
+
+			$.ajax({
+        		url:"sumHours.php", //the page containing php script
+        		type: "POST", //request type
+        		success:function(result){
+        	 		$("#totHours").html(result);
+     	 		 }
+     		});
+			$.ajax({
+        		url:"hours.php", //the page containing php script
+        		type: "POST", //request type
+        		success:function(result){
+        	 		$("#table").html(result);
+     	 		 }
+     		});
+
+     		$.ajax({
+        		url:"setAddUser.php", //the page containing php script
+        		type: "POST", //request type
+        		success:function(result){
+        	 		$("#addUserLink").html(result);
+     	 		 }
+     		});
+		}
+		$( document ).ready(
+            function(){
+            $.ajax({
+                    url:"checkLoggedIn.php", //the page containing php script
+                    type: "POST", //request type
+                    success:function(result){
+                        if(result == 'Error'){
+                            window.location.replace("index.html")
+                        }
+                     }
+            });
+            updateHours()
+            $.ajax({
+                url:"displayCert.php", //the page containing php script
+                type: "POST", //request type
+                success:function(result){
+                    $("#display").html(result);
+                 }
+            });       
+            $.ajax({
+                url:"displayFirmsDepts.php", //the page containing php script
+                type: "POST", //request type
+                success:function(result){
+                  if(result != 'Error')
+                    $("#firmdept").html(result);
+                 }
+            });     
+        });
+
+
+		function clockIn(){
+			$.ajax({
+        		url:"clockIn.php", //the page containing php script
+        		type: "POST", //request type
+        		success:function(result){
+        	 		console.log("Clock In " + result);
+        	 		updateHours();
+
+     	 		 }
+     		});
+		}
+
+		function clockOut(){
+			$.ajax({
+        		url:"clockOut.php", //the page containing php script
+        		type: "POST", //request type
+        		success:function(result){
+        	 		console.log("Clock out " + result);
+        	 		updateHours();
+
+     	 		 }
+     		});
+		}
+		function logOut(){
+			$.ajax({
+        		url:"logOut.php", //the page containing php script
+        		type: "POST", //request type
+        		success:function(result){
+        			console.log("Log Out");
+        			window.location.replace("index.html")
+
+     	 		 }
+
+     		});
+		}
+	</script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+        var temp = {};
+        // Create the data table.
+        var jsonData = $.ajax({
+          url: "drawChart.php",
+          dataType: "json",
+          async: false
+          }).responseText;
+
+    var myArray = JSON.parse(jsonData);
+    console.log(myArray);
+
+
+            temp = []
+                    myArray.forEach(function(element){
+                        inner = []
+                        inner.push(element[0]);
+                        inner.push(parseFloat(element[1]));
+                        temp.push(inner);
+                    });
+
+        console.log(temp);
+
+        var data = new google.visualization.DataTable();
+
+        data.addColumn('string', 'Name');
+        data.addColumn('number', 'Hours');
+        data.addRows(temp);
+
+
+        // // Set chart options
+        var options = {'title':'Work Done By Employees',
+                       'width':500,
+                       'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+              drawChart();
+
+    </script>
+
+	<title>Clock In and Out</title>
+</head>
+<body>
+	<div id = 'head'></div>
+	<div id = 'logoutdiv'><button id = 'logout' onclick="logOut()"> Log Out</button></div>
+	<div id = "totHours"></div>
+	<div id = "addUserLink"></div>
+    <div id = "Clock in">
+		<button id = "clock_in" onclick="clockIn()">Clock In</button>
+	</div>
+	<div id = "Clock out"> 
+		<button id = "clock_out" onclick="clockOut()">Clock Out</button>
+	</div>
+     <div id = "display"></div>
+
+	<div> 
+		<h3>View Hours Below</h3>
+		<div id = "table">
+		
+		</div>
+	</div>
+    <div id="chart_div"></div>
+    <div id = "firmdept"></div>
+
+</body>
+</html>

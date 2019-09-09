@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add Tool</title>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script type="text/javascript">
+		$( document ).ready(
+			function(){
+				$.ajax({
+	        		url:"checkBA.php", //the page containing php script
+	        		type: "POST", //request type
+	        		success:function(result){
+	        			if(result == 'Error'){
+	        				window.location.replace("clockIn.html")
+	        			}
+	     	 		 }
+	     		});
+			});
+	</script>
+</head>
+<body>
+	<div id = 'add'> 
+			<form action = 'addTool.php' method = "post">
+				<h1>Add a Tool to system</h1>
+
+				 <label for="tool_name">Tool Name</label>
+  				<input type="text" name="tool_name" id="tool_name"required>
+
+        		<br>
+        		<label for="prof">Proficiency</label>
+  				<input type="range" min="1" max="10" value="5" class="slider" id="prof" name = "prof"required>
+
+				<input type = "submit" value = "Submit">
+
+			</form>
+	</div>
+</body>
+</html>
